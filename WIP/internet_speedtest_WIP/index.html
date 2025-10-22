@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Minimal Internet Speed Test (M-Lab ndt7)</title>
+
+  <link rel="stylesheet" href="static/styles.css" />
+  <!-- Official M-Lab ndt7 client (from unpkg CDN). If you prefer a specific version change @latest to @X.Y.Z -->
+  <script src="https://unpkg.com/@m-lab/ndt7@latest/dist/ndt7.js" defer></script>
+
+  <script src="static/app.js" defer></script>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Speed Test (M-Lab ndt7)</h1>
+      <p class="muted">Minimal, responsive client that discovers the nearest M-Lab server.</p>
+    </header>
+
+    <section class="card" id="server-card">
+      <h2>Nearest M-Lab server</h2>
+      <div id="server-info">
+        <p class="muted">Discovering nearest server…</p>
+      </div>
+
+      <div class="row">
+        <button id="discover-btn" class="btn">Discover again</button>
+        <button id="run-test-btn" class="btn primary">Run full ndt7 test</button>
+      </div>
+
+      <div class="manual">
+        <label for="server-input" class="small muted">Manual server (hostname or full URL)</label>
+        <div class="row">
+          <input id="server-input" placeholder="e.g. ndt-mlab1.iad01.measurement-lab.org or wss://ndt-mlab1.../ndt/v7" />
+          <button id="set-server-btn" class="btn">Use server</button>
+        </div>
+      </div>
+
+      <p id="notes" class="muted small"></p>
+    </section>
+
+    <section class="card" id="metrics-card">
+      <h2>Metrics</h2>
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="label">Download</div>
+          <div id="download" class="value">—</div>
+        </div>
+        <div class="metric">
+          <div class="label">Upload</div>
+          <div id="upload" class="value">—</div>
+        </div>
+        <div class="metric">
+          <div class="label">Ping</div>
+          <div id="ping" class="value">—</div>
+        </div>
+        <div class="metric">
+          <div class="label">Jitter</div>
+          <div id="jitter" class="value">—</div>
+        </div>
+      </div>
+
+      <div id="log" class="log muted small" aria-live="polite"></div>
+    </section>
+
+    <footer class="muted small">
+      Uses M‑Lab ndt7 discovery. Full upload/download requires ndt7 client + server support for WebTransport/WebSocket. If automatic discovery fails due to CORS, use the manual server input or run a small proxy (see README).
+    </footer>
+  </main>
+</body>
+</html>

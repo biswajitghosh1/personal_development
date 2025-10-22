@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+  <section class="auth">
+    <h2>Login</h2>
+    <form method="post">
+      <label>Username</label>
+      <input name="username" required autofocus />
+      <label>Password</label>
+      <input name="password" type="password" required />
+      <p><button type="submit" class="btn primary">Sign in</button></p>
+    </form>
+    <p>Admin credentials are created during setup (see terminal output) — change after first login.</p>
+  </section>
+{% endblock %}

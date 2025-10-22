@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Password Vault</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="login-screen">
+    <h2>Password Vault Login</h2>
+    <input type="password" id="master-password" placeholder="Enter Master Password"
+           autocomplete="off" name="new-password" />
+    <button id="login-btn">Login</button>
+    <button id="setup-btn">Setup New Vault</button>
+  </div>
+
+  <div id="vault-screen" class="hidden">
+    <h2>Your Password Vault</h2>
+    <div class="toolbar">
+      <input type="text" id="search" placeholder="Search (site / username)..." />
+      <button id="add-entry-btn">Add Entry</button>
+      <label class="import-label">
+        Import CSV
+        <input type="file" id="csv-import" accept=".csv" hidden />
+      </label>
+      <label class="import-label">
+        Import Excel
+        <input type="file" id="excel-import" accept=".xlsx,.xls" hidden />
+      </label>
+    </div>
+
+    <table id="vault-table">
+      <thead>
+        <tr>
+          <th>Site</th>
+          <th>Username</th>
+          <th>Password</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!--<div id="entry-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Entry</h3>
+      <input type="text" id="site" placeholder="Site" autocomplete="off" />
+      <input type="text" id="username" placeholder="Username" autocomplete="off" />
+      <input type="password" id="password" placeholder="Password"
+             autocomplete="new-password" name="new-password" />
+      <textarea id="notes" placeholder="Notes"></textarea>
+      <div class="actions">
+        <button id="save-entry-btn">Save</button>
+        <button id="cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </div> -->
+
+<script src="xlsx.full.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+body{font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;margin:20px;background:linear-gradient(180deg,#f7f7f8,#eef2ff)}
+#login-screen,#vault-screen{max-width:900px;margin:0 auto;background:#fff;padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(20,20,40,0.06)}
+.hidden{display:none}
+input,textarea,button{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #e6e9ee}
+button{background:#2b6ef6;color:#fff;border:0;cursor:pointer;padding:10px 12px}
+.toolbar{display:flex;gap:10px;align-items:center}
+.toolbar input{flex:1}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid #eef2ff;padding:8px;text-align:left}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center}
+.modal-content{background:#fff;padding:16px;border-radius:8px;max-width:420px;width:90%}
+.highlight{background:#fff3b0;padding:0 2px;border-radius:3px}
+@media(max-width:520px){.toolbar{flex-direction:column}}

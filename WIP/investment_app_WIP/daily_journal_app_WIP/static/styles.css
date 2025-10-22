@@ -1,0 +1,28 @@
+:root {
+  --bg: #fafafa;
+  --accent: #1167b1;
+  --muted: #666;
+}
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  margin: 0;
+  background: var(--bg);
+  color: #111;
+}
+.site-header { background: var(--accent); color: white; padding: 12px 0; }
+.site-header .inner { max-width: 900px; margin: 0 auto; padding: 0 12px; display:flex; align-items:center; justify-content:space-between; }
+.site-header h1 { margin: 0; font-size: 1.25rem; }
+.container { max-width: 900px; margin: 22px auto; padding: 0 12px; }
+.entry-form input[type="text"], .entry-form textarea, .entry-form input[type="date"], .login-form input[type="text"], .login-form input[type="password"] { width: 100%; padding:8px; margin-bottom:10px; border:1px solid #ddd; border-radius:4px; }
+.form-actions { display:flex; gap:8px; align-items:center; }
+.entries { list-style:none; padding:0; margin:0; }
+.entry-item { padding:10px; background:white; border:1px solid #eee; margin-bottom:10px; border-radius:6px; }
+.entry-item.important { border-left: 6px solid #d9534f; background:#fff6f6; }
+.imp-badge { background:#d9534f; color:white; padding:2px 6px; border-radius:4px; font-size:0.8rem; margin-left:6px; }
+.meta { color:var(--muted); font-size:0.95rem; margin-bottom:6px; }
+.content-preview { margin:6px 0; color:#222; }
+.flash { padding:8px; border-radius:4px; margin-bottom:12px; }
+.flash.success { background:#e6ffed; color:#064e27; border:1px solid #b8f1d0; }
+.flash.error { background:#ffe6e6; color:#6a0808; border:1px solid #ffbdbd; }
+.site-footer { text-align:center; padding:16px 0; color:#666; margin-top:30px; }
+.inline-filter { margin-bottom:12px; display:flex; gap:8px; align-items:center; }

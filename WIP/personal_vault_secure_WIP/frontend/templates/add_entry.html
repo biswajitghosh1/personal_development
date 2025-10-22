@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+  <section class="form-section">
+    <h2>Add to {{ section.title }}</h2>
+    <form method="post" id="entryForm">
+      <div id="pairs">
+        <div class="pair">
+          <input name="key[]" placeholder="Field name" required />
+          <input name="value[]" placeholder="Value" required />
+          <button type="button" class="remove">−</button>
+        </div>
+      </div>
+      <p><button type="button" id="addPair" class="btn">Add field</button></p>
+      <p><button type="submit" class="btn primary">Save</button></p>
+    </form>
+  </section>
+{% endblock %}

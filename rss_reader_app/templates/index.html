@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RSS Reader</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  {% if inline_css %}
+  <style>{{ inline_css|safe }}</style>
+  {% endif %}
+</head>
+<body>
+  <header class="site-header">
+    <div class="inner">
+      <h1>RSS Reader</h1>
+
+      <form method="post" class="inline-form" id="feed-form">
+        <label for="feed-url" class="visually-hidden">RSS feed URL</label>
+        <input id="feed-url" type="text" name="feed_url" placeholder="Enter RSS feed URL" value="{{ url|default('') }}">
+        <button type="submit">Load</button>
+
+        <!-- Popular feeds dropdown -->
+        <label for="feed-select" class="visually-hidden">Choose a popular feed</label>
+        <select id="feed-select" aria-label="Popular RSS feeds">
+          <option value="">— Popular feeds —</option>
+          <option value="https://sofafeed.macadmins.io/v1/rss_feed.xml">SofaFeed (macadmins)</option>
+          <option value="https://9to5mac.com/feed">9to5Mac</option>
+          <option value="https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml">NYTimes - Home Page</option>
+          <option value="http://feeds.bbci.co.uk/news/rss.xml">BBC News</option>
+          <option value="https://www.theverge.com/rss/index.xml">The Verge</option>
+          <option value="https://feeds.arstechnica.com/arstechnica/index">Ars Technica</option>
+          <option value="https://news.ycombinator.com/rss">Hacker News</option>
+        </select>
+      </form>
+  </header>
+
+  <main class="content">
+    <div class="inner">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="messages">
+            {% for category, msg in messages %}
+              <div class="flash {{ category }}">{{ msg }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% if feed %}
+        <section class="feed-meta">
+          <h2>{{ feed.feed.title if feed.feed.title else 'Untitled Feed' }}</h2>
+          <p>{{ feed.feed.get('subtitle', '') }}</p>
+          <p class="meta">Last updated: {{ feed.feed.get('updated', '') }}</p>
+        </section>
+
+        <section class="entries">
+          {% for entry in feed.entries %}
+            <article class="entry">
+              <h3><a href="{{ entry.link }}" target="_blank" rel="noopener">{{ entry.title }}</a></h3>
+              <p class="published">{{ entry.get('published', entry.get('updated', '')) }}</p>
+              <div class="summary">{{ entry.get('summary', '')|safe }}</div>
+            </article>
+          {% else %}
+            <p>No entries found in this feed.</p>
+          {% endfor %}
+        </section>
+      {% else %}
+        <p>Enter an RSS or Atom feed URL above and click Load.</p>
+      {% endif %}
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">&copy; 2025 Biswajit Ghosh</div>
+  </footer>
+
+  <script>
+    // Wire the dropdown to the URL input without submitting automatically.
+    document.addEventListener('DOMContentLoaded', function () {
+      var select = document.getElementById('feed-select');
+      var input = document.getElementById('feed-url');
+
+      if (!select || !input) return;
+
+      // When the user selects a popular feed, populate the input.
+      select.addEventListener('change', function () {
+        if (select.value) {
+          input.value = select.value;
+          input.focus();
+          // Optional: scroll input into view on small screens
+          input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+
+      // If the page was loaded with a URL in the query, pre-select it if it matches an option.
+      var current = "{{ url|default('') }}";
+      if (current) {
+        for (var i = 0; i < select.options.length; i++) {
+          if (select.options[i].value === current) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

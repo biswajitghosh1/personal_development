@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+  {% macro render_table(rows) -%}
+    {% if not rows %}<p>No records.</p>{% else %}
+    <div class="table-wrap">
+      <table>
+        {% set headers = [] %}
+        {% for r in rows %}
+          {% for k in r.keys() if k != 'id' %}
+            {% if k not in headers %}
+              {% set _ = headers.append(k) %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+        <tr>
+          {% for h in headers %}
+            <th>{{ h }}</th>
+          {% endfor %}
+          <th>Actions</th>
+        </tr>
+        {% for row in rows %}
+          <tr>
+            {% for h in headers %}
+              <td data-label="{{ h }}">{{ row.get(h, '') }}</td>
+            {% endfor %}
+            <td>
+              <a class="btn" href="{{ url_for('main.edit_entry', entry_id=row.id) }}">Edit</a>
+              <form method="post" action="{{ url_for('main.delete_entry', entry_id=row.id) }}" style="display:inline" onsubmit="return confirm('Delete?')">
+                <button type="submit" class="btn danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% endif %}
+  {%- endmacro %}
+
+  {% for section in sections %}
+    <section id="{{ section.slug }}" class="section">
+      <h2>{{ section.title }}</h2>
+      {% if current_user.is_authenticated %}
+        <p><a class="btn primary" href="{{ url_for('main.add_entry', slug=section.slug) }}">Add entry</a></p>
+      {% endif %}
+      {{ render_table(section.rows) }}
+      <p class="BTT"><a href="#">Back to Top</a></p>
+    </section>
+  {% endfor %}
+{% endblock %}

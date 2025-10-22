@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--Head Section Starts-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mac and Mobile KnowledgeBase | Assignment Groups</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<!--Head Section Ends-->
+
+<!--Body Section Starts-->
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/Shell Pecten RGB colour.jpg" alt="logo">
+            <div class="logo-text">Mac and Mobile Knowledgebase</div>
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav id="navbar">
+            <a href="index.html">Home</a>
+            <a href="KB_WS1_AG.html" class="active">Assignment Groups</a>
+            <a href="KB_WS1_CP.html">Compliance Policies</a>
+            <a href="KB_WS1_ET.html">Email Templates</a>
+            <a href="KB_WS1_DS.html">Device Scripts</a>
+            <a href="KB_WS1_Dsen.html">Device Sensors</a>
+            <a href="KB_Ref_Gen_Info.html">General Information</a>
+        </nav>
+    </header>
+        <script src="scripts/script.js"></script>
+    <main>
+        <h1>Assignment Groups</h1>
+        <p>
+            The section contains:
+            <ul>
+                <li>Introduction</li>
+                <li>Process to create Smart Groups</li>
+                <li>List of Smart Groups</li>
+            </ul>
+        </p>
+
+        <!--Introduction Section Starts-->
+        <h2>Introduction</h2>
+        <p>
+            Assignment groups are the groups which are created / used to deploy applications, profiles, sensors and also used for excluding any of these. The Assignment groups also known as "Smart Groups", can either be MDM based or Directory based. Directory based Smart groups are linked to Active Directory (FGO and FGR groups) and any changes to these groups in Active Directory will be replicated in MDM based on the sync which is set to once every 24 hours. The sync can also be done manually and the access is retained by the Workspace Admins. This document covers the smart groups which is in Production as per the following platforms:
+            <table>
+                <tr>
+                    <td>General (Irrespective of Platforms)</td>
+                </tr>
+                <tr>
+                    <td>Android (Corp and BYOD)</td>
+                </tr>
+                <tr>
+                    <td>iOS (Corp and BYOD)</td>
+                </tr>
+                <tr>
+                    <td>macOS</td>
+                </tr>
+                <tr>
+                    <td>visionOS</td>
+                </tr>
+                <tr>
+                    <td>MetaQuest</td>
+                </tr>
+                <tr>
+                    <td>HoloLens</td>
+                </tr>                   
+            </table>
+        </p>
+        <!--Introduction Section Ends-->
+        <p style="text-align: right;"><a href="#"><strong>Back to Top</strong></a></p>
+
+        <!--Process and Details-->
+        <h2>Process and Additional Details</h2>
+        <p>
+            The following is the process to create an Assignment group in Workspace One:
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/3e46IECRMVU?t=35&si=Zsgf74EJHdFLvpNm" allowfullscreen></iframe>
+            </div>
+            <p>The smart groups in Workspace One is mapped to number and the mapping is as below:</p>
+            <table>
+                <tr>
+                    <th>Group Name</th>
+                    <th>Group Number</th>
+                </tr>
+                <tr>
+                    <td>Global Group</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Smart Group</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Organization Group </td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>User Group </td>
+                    <td>4</td>
+                </tr>
+            </table>
+            <p>
+                All Smart groups which are created need to follow a particular naming convention which is: <strong>(platform)_(reason_for_the_group)_(name_of_the_group)</strong>.There should not be any "space" in the name of the group and all spaces needs to be replaced with an underscore "_".
+            </p>
+            <p style="text-align: right;"><a href="#"><strong>Back to Top</strong></a></p>
+
+            <!--List of Smart Groups-->
+            <h3>List of Smart Groups</h3>
+            <p>The list of Smart Groups have been divided by platforms:</p>
+
+            <!--General Smart Group Section Starts-->
+            <h4>General (Irrespective of Platforms)</h4>
+            <p>
+                The following is the list of Smart Groups which is present in Production environment in Workspace One which is irrespective of platforms. The exclusion groups will be created with the naming convention which is:<strong>General_[Group Reason]_Name of the Group</strong>
+            </p>
+            <table>
+                <tr>
+                    <th>Sl. No.</th>
+                    <th>Name of the Group</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Group Purpose</th>
+                    <th>Managed By</th>
+                    <th>Status</th> 
+                </tr>
+                <tr>
+                    <td>1. </td>
+                    <td>General_Exclusion_Execs_Execs_PAs_and_Critical</td>
+                    <td>Exclusion group to exclude Executives, Executive PA and Critical Users</td>
+                    <td>Directory</td>
+                    <td>User Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>2. </td>
+                    <td>General_Exception_Testing_IMS-CBA_17_07_2025</td>
+                    <td>Testing group to test out IMS CBA on a temprary basis</td>
+                    <td>Directory</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+            </table>
+            <p style="text-align: right;"><a href="#"><strong>Back to Top</strong></a></p>
+            <!--General Smart Group Section Ends-->
+
+            <!--Android (Corp and BYOD) Section Starts-->
+            <h4>Android (Corp and BYOD)</h4>
+            <p>The following is the list of Smart Groups which is present in Production environment in Workspace One for Android devices:</p>
+            <table>
+                <tr>
+                    <th>Sl. No.</th>
+                    <th>Name of the Group</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Group Purpose</th>
+                    <th>Managed By</th>
+                    <th>Status</th>                    
+                </tr>
+                <tr>
+                    <td>1.</td>
+                    <td>Android_All_Devices_Personal</td>
+                    <td>All personal Android Devices</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>Android_App__AIG_Travel_Assistance</td>
+                    <td>Application group for AIG TRavel Assistance</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td>Android_App_365Tid</td>
+                    <td>Application group for 365Tid</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>4.</td>
+                    <td>Android_App_3Kontakt</td>
+                    <td>Application group for 3Kontakt</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>5.</td>
+                    <td>Android_App_ADPMyWork</td>
+                    <td>Application group for ADPMyWork</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>6.</td>
+                    <td>Android_App_AMS</td>
+                    <td>Application group for AMS</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>7.</td>
+                    <td>Android_App_ArcGIS_Explorer</td>
+                    <td>Application group for ArcGIS Explorer</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>8.</td>
+                    <td>Android_App_ArcGIS_Field_Maps</td>
+                    <td>Application group for ArcGIS Field Maps</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>9.</td>
+                    <td>Android_App_ArcGIS_Worforce</td>
+                    <td>Application group for ArcGIS Worforce</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+               <tr>
+                    <td>10.</td>
+                    <td>Android_App_AvaCaption</td>
+                    <td>Application group for AvaCaption</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+               <tr>
+                    <td>11.</td>
+                    <td>Android_App_Cisco_Duo_Mobile</td>
+                    <td>Application group for AvaCaption</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+            </table>
+            <p style="text-align: right;"><a href="#"><strong>Back to Top</strong></a></p>
+            <!--Android (Corp and BYOD) Section Ends-->
+
+            <!--iOS (Corp and BYOD) Section Starts-->
+            <h4>iOS (Corp and BYOD)</h4>
+            <p>The following is the list of Smart Groups which is present in Production environment in Workspace One for iOS devices:</p>
+            <table>
+                <tr>
+                    <th>Name of the Group</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Group Purpose</th>
+                    <th>Managed By</th>
+                    <th>Status</th>                    
+                </tr>
+            </table>
+            <p style="text-align: right;"><a href="#"><strong>Back to Top</strong></a></p>
+            <!--iOS (Corp and BYOD) Section Ends-->
+
+            <!--macOS Section Starts-->
+            <h4>macOS</h4>
+            <p>
+                The following is the list of Smart Groups which is present in Production environment in Workspace One for macOS devices.
+                <br>All macOS smart groups needs to be created in the following format:
+                <br><strong>macOS_[Group Reason]_Name of the Group</strong>
+            </p>
+            <table>
+                <tr>
+                    <th>Sl. No.</th>
+                    <th>Name of the Group</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Group Purpose</th>
+                    <th>Managed By</th>
+                    <th>Status</th>                
+                </tr>
+                <tr>
+                    <td>1.</td>
+                    <td>Apple Mac Corp Only</td>
+                    <td>Group for all macOS devices in Apple Mac CORP OG</td>
+                    <td>Org</td>
+                    <td>Devices Group</td>
+                    <td>Apple Mac Corp Only</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>Apple Mac Corp Unlocked</td>
+                    <td>Group for all macOS devices in Apple Mac CORP Unlocked OG</td>
+                    <td>Org</td>
+                    <td>Devices Group</td>
+                    <td>Apple Mac Corp Unlocked</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td>CORP</td>
+                    <td>Group for all macOS devices in CORP OG</td>
+                    <td>Org</td>
+                    <td>Devices Group</td>
+                    <td>CORP</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>4.</td>
+                    <td>Dedicated</td>
+                    <td>Group for all macOS devices in Dedicated OG</td>
+                    <td>Org</td>
+                    <td>Devices Group</td>
+                    <td>Dedicated</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>5.</td>
+                    <td>macOS</td>
+                    <td>Group for all macOS devices in macOS OG</td>
+                    <td>Org</td>
+                    <td>Devices Group</td>
+                    <td>macOS</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>6.</td>
+                    <td>macOS_App_Adobe_Suite</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>Directory</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>7.</td>
+                    <td>macOS_All_Devices</td>
+                    <td>Group for all macOS devices in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>8.</td>
+                    <td>macOS_App_Core_Apps</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>9.</td>
+                    <td>macOS_App_Design_Apps</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>10.</td>
+                    <td>macOS_App_Developer_Apps</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>11.</td>
+                    <td>macOS_App_FlexNet</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>12.</td>
+                    <td>macOS_App_Mindmanager</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>13.</td>
+                    <td>macOS_App_Remote_Desktop</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>14.</td>
+                    <td>macOS_App_SecureEmail_SMIME_Encryption</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>15.</td>
+                    <td>macOS_App_SecureEmail_SMIME_Encryption_Pinless</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>16.</td>
+                    <td>macOS_App_SecureEmail_SMIME_Encryption_Renewal</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>17.</td>
+                    <td>macOS_App_Think_Cell</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>18.</td>
+                    <td>macOS_Apps_Group</td>
+                    <td>Group for app deployment in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Application Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>19.</td>
+                    <td>macOS_Block_Apple_Intelligence_15.4</td>
+                    <td>Group for deploying Apple Intelligence block in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>20.</td>
+                    <td>macOS_Certificate_CORP_Admin_Ping_SIMAAS_Release_Ring_1</td>
+                    <td>Group for deploying Ping SIMAAS certifiate for Admins (Ring 1) in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>21.</td>
+                    <td>macOS_Certificate_CORP_Admin_Ping_SIMAAS_Release_Ring_2</td>
+                    <td>Group for deploying Ping SIMAAS certifiate for Admins (Ring 2) in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>22.</td>
+                    <td>macOS_Certificate_CORP_Admin_Ping_SIMAAS_Release_Ring_3</td>
+                    <td>Group for deploying Ping SIMAAS certifiate for Admins (Ring 3) in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>23.</td>
+                    <td>macOS_Certificate_DigiCert_ICA</td>
+                    <td>Group for deploying Digicert ICA certificate in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>24.</td>
+                    <td>macOS_Certificate_Ping_SIMAAS_Type-B_AM</td>
+                    <td>Group for deploying Ping SIMAAS Type B certificate for Americas in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>25.</td>
+                    <td>macOS_Certificate_Ping_SIMAAS_Type-B_AP</td>
+                    <td>Group for deploying Ping SIMAAS Type B certificate for Asia-Pac in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>26.</td>
+                    <td>macOS_Certificate_Ping_SIMAAS_Type-B_EU</td>
+                    <td>Group for deploying Ping SIMAAS Type B certificate for Europe in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>27.</td>
+                    <td>macOS_Certificate_Ping_SIMAAS_Type-C_AM</td>
+                    <td>Group for deploying Ping SIMAAS Type C certificate for Americas in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>28.</td>
+                    <td>macOS_Certificate_Ping_SIMAAS_Type-C_AP</td>
+                    <td>Group for deploying Ping SIMAAS Type C certificate for Asia-Pac in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>29.</td>
+                    <td>macOS_Certificate_Ping_SIMAAS_Type-C_EU</td>
+                    <td>Group for deploying Ping SIMAAS Type C certificate for Europe in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>30.</td>
+                    <td>macOS_Certificate_Signing_Renewal</td>
+                    <td>Group for deploying Ping SIMAAS Type C certificate for Europe in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>31.</td>
+                    <td>macOS_Certificate_Std_Admin_Ping_SIMAAS_Release_Ring_1</td>
+                    <td>Group for deploying Ping SIMAAS certifiate for Non-Admins (Ring 1) in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>32.</td>
+                    <td>macOS_Certificate_Std_Admin_Ping_SIMAAS_Release_Ring_2</td>
+                    <td>Group for deploying Ping SIMAAS certifiate for Non-Admins (Ring 2) in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>33.</td>
+                    <td>macOS_Certificate_Std_Admin_Ping_SIMAAS_Release_Ring_3</td>
+                    <td>Group for deploying Ping SIMAAS certifiate for Non-Admins (Ring 3) in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>34.</td>
+                    <td>macOS_Device_T2_Chip_Verify</td>
+                    <td>Group for verificatin of T2 chip based devices in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>35.</td>
+                    <td>macOS_Devices_Admin_Elevated_Rights</td>
+                    <td>Group for devices with elevated Admin rights in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>   
+                <tr>
+                    <td>36.</td>
+                    <td>macOS_Devices_AF_Ring</td>
+                    <td>Group for devices for Africa in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>37.</td>
+                    <td>macOS_Devices_AFRICAME_REGION</td>
+                    <td>Group for devices for Africa and Middle East Region in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>38.</td>
+                    <td>macOS_Devices_AM_Ring</td>
+                    <td>Group for devices for America Region in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>39.</td>
+                    <td>macOS_Devices_AMERICAS_REGION</td>
+                    <td>Group for devices for America Region in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>40.</td>
+                    <td>macOS_Devices_AP_Ring</td>
+                    <td>Group for devices for Asia Pac Region in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>41.</td>
+                    <td>macOS_Devices_ASIA-PAC_REGION</td>
+                    <td>Group for devices for Asia Pac Region in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>42.</td>
+                    <td>macOS_Devices_EU_Ring</td>
+                    <td>Group for devices for Europe Region in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>43.</td>
+                    <td>macOS_Devices_EUROPE_REGION</td>
+                    <td>Group for devices for Europe Region in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>             
+                <tr>
+                    <td>44.</td>
+                    <td>macOS_Devices_Intel</td>
+                    <td>Group for Intel based devices in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>45.</td>
+                    <td>macOS_Devices_Ring_1</td>
+                    <td>Group for Release Ring 1 devices in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>46.</td>
+                    <td>macOS_Devices_Ring_2</td>
+                    <td>Group for Release Ring 2 devices in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>             
+                <tr>
+                    <td>47.</td>
+                    <td>macOS_Devices_Ring_3</td>
+                    <td>Group for Release Ring 3 devices in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>48.</td>
+                    <td>macOS_Certificate_DigiCert_Trust_Assistant</td>
+                    <td>Group for deploying DigiCert Trust Assistant</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>  
+                <tr>
+                    <td>49.</td>
+                    <td>macOS_eDiscovery</td>
+                    <td>Group for Legal Hold Apple Mac devices in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>50.</td>
+                    <td>macOS_eDiscovery_AFME</td>
+                    <td>Group for Legal Hold Apple Mac devices for Africa and Middle East in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>51.</td>
+                    <td>macOS_eDiscovery_AM</td>
+                    <td>Group for Legal Hold Apple Mac devices in Americas in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>52.</td>
+                    <td>macOS_eDiscovery_AP</td>
+                    <td>Group for Legal Hold Apple Mac devices in Asia-Pac in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>53.</td>
+                    <td>macOS_eDiscovery_EU</td>
+                    <td>Group for Legal Hold Apple Mac devices in Europe in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Devices Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>54.</td>
+                    <td>macOS_Testers_GPC_China</td>
+                    <td>Test group to check the GPC for devices in China</td>
+                    <td>MDM</td>
+                    <td>Users Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>55.</td>
+                    <td>macOS_Testers_Group</td>
+                    <td>Group for Test Apple Mac devices in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Users Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>56.</td>
+                    <td>macOS_Testers_Group</td>
+                    <td>Group for Test Apple Mac devices in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Users Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>  
+                <tr>
+                    <td>57.</td>
+                    <td>MDM-MacAdminElevation-US</td>
+                    <td>Custom User group for Admin Elevation in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Users Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>  
+                <tr>
+                    <td>58.</td>
+                    <td>MDM-MACBLR-US</td>
+                    <td>Custom User group for Mac Users in Bangalore in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Users Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>59.</td>
+                    <td>MDM-MacDesign-US</td>
+                    <td>Custom User group for Mac Design Users in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Users Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>60.</td>
+                    <td>MDM-MacDeveloper-US</td>
+                    <td>Custom User group for Mac Developers in US in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Users Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>
+                <tr>
+                    <td>61.</td>
+                    <td>MDM-SE_Renewal_macEncrypt-US</td>
+                    <td>Custom User group for mac encryption in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Users Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr> 
+                <tr>
+                    <td>62.</td>
+                    <td>MDM-SE_Renewal_macSign-US</td>
+                    <td>Custom User group for macSign in R2 OG</td>
+                    <td>MDM</td>
+                    <td>Users Group</td>
+                    <td>R2</td>
+                    <td bgcolor="6FBC05">Active</td>
+                </tr>            
+            </table>
+            <p style="text-align: right;"><a href="#"><strong>Back to Top</strong></a></p>
+            <!--macOS Section Ends-->
+            
+            <h3>visionOS</h3>
+        <p style="text-align: right;"><a href="#"><strong>Back to Top</strong></a></p>
+        <h3>MetaQuest</h3>
+        <p style="text-align: right;"><a href="#"><strong>Back to Top</strong></a></p>
+        <h3>HoloLens</h3>
+        <p style="text-align: right;"><a href="#"><strong>Back to Top</strong></a></p>
+    </main>
+
+  <!--Footer Section Starts-->  
+  <footer>
+    <p>&copy; 2025 Biswajit Ghosh. All rights reserved.</p>
+    <p>
+      <a href="index.html">Home</a> |
+      <a href="#">About</a> |
+      <a href="https://github.com/biswajitghosh2/development/blob/main/LICENSE">License</a> |
+      <a href="https://github.com/biswajitghosh2/development/blob/main/README.md">GitHub README</a>
+    </p>
+  </footer>
+  <!--Footer Section Ends-->
+
+</body>
+<!--Body Section Ends-->
+
+</html>

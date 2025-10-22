@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h2>{{ 'Edit' if entry else 'Add' }} Entry</h2>
+  <form method="post" class="entry-form">
+    <label for="entry_date">Date</label>
+    <input id="entry_date" name="entry_date" type="date" value="{{ default_date }}">
+    <label for="title">Title</label>
+    <input id="title" name="title" type="text" value="{{ entry.title if entry else '' }}" required>
+    <label for="content">Content</label>
+    <textarea id="content" name="content" rows="8" required>{{ entry.content if entry else '' }}</textarea>
+    <label>
+      <input type="checkbox" name="important" value="1" {% if entry and entry.important %}checked{% endif %}>
+      Mark as important
+    </label>
+    <div class="form-actions">
+      <button type="submit">{{ 'Save' if entry else 'Add' }}</button>
+      <a href="{{ url_for('index') }}">Cancel</a>
+    </div>
+  </form>
+{% endblock %}
