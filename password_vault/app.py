@@ -29,6 +29,7 @@ def init_db():
             username TEXT NOT NULL,
             password TEXT NOT NULL,
             description TEXT,
+            type TEXT DEFAULT 'personal',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
         '''
@@ -37,6 +38,15 @@ def init_db():
     conn.close()
 
 init_db()
+
+# Lightweight migration: ensure 'type' column exists
+conn = get_db_connection()
+cur = conn.execute("PRAGMA table_info(entries)")
+cols = [r['name'] for r in cur.fetchall()]
+if 'type' not in cols:
+    conn.execute("ALTER TABLE entries ADD COLUMN type TEXT DEFAULT 'personal'")
+    conn.commit()
+conn.close()
 
 def login_required(f):
     @wraps(f)
@@ -72,10 +82,11 @@ def index():
         pwd = request.form.get('pwd')
         desc = request.form.get('description')
         if site and uname and pwd:
+            etype = request.form.get('type') or 'personal'
             conn = get_db_connection()
             conn.execute(
-                'INSERT INTO entries (site, username, password, description) VALUES (?, ?, ?, ?)',
-                (site, uname, pwd, desc)
+                'INSERT INTO entries (site, username, password, description, type) VALUES (?, ?, ?, ?, ?)',
+                (site, uname, pwd, desc, etype)
             )
             conn.commit()
             conn.close()
@@ -95,6 +106,34 @@ def delete(entry_id):
     conn.commit()
     conn.close()
     return redirect(url_for('index'))
+
+
+@app.route('/edit/<int:entry_id>', methods=['GET', 'POST'])
+@login_required
+def edit(entry_id):
+    conn = get_db_connection()
+    row = conn.execute('SELECT * FROM entries WHERE id = ?', (entry_id,)).fetchone()
+    if not row:
+        conn.close()
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        site = request.form.get('site')
+        uname = request.form.get('uname')
+        pwd = request.form.get('pwd')
+        desc = request.form.get('description')
+        etype = request.form.get('type') or 'personal'
+        conn.execute(
+            'UPDATE entries SET site = ?, username = ?, password = ?, description = ?, type = ? WHERE id = ?',
+            (site, uname, pwd, desc, etype, entry_id)
+        )
+        conn.commit()
+        conn.close()
+        return redirect(url_for('index'))
+
+    item = dict(row)
+    conn.close()
+    return render_template('edit.html', item=item)
 
 if __name__ == '__main__':
     app.run(port=5002, debug=True)

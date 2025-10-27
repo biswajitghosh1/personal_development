@@ -9,7 +9,7 @@
   <body>
     <header class="top">
       <div class="container">
-        <h1>Local Vault</h1>
+        <h1>Password Vault - Official and Project</h1>
         <nav><a href="/logout">Sign out</a></nav>
       </div>
     </header>
@@ -21,6 +21,10 @@
           <input name="uname" placeholder="username" required>
           <input name="pwd" placeholder="password" required>
           <input name="description" placeholder="description (optional)">
+          <select name="type" aria-label="entry type">
+            <option value="project">Project</option>
+            <option value="official">Official</option>
+          </select>
           <button class="btn" type="submit">Add</button>
         </form>
       </section>
@@ -29,16 +33,24 @@
         <h2>Stored items ({{ items|length }})</h2>
         {% if items %}
           <table class="table">
-            <thead><tr><th>#</th><th>Site</th><th>Username</th><th>Password</th><th>Description</th><th></th></tr></thead>
+            <thead><tr><th>#</th><th class="col-site">Site</th><th class="col-username">Username</th><th class="col-password">Password</th><th class="col-description">Description</th><th class="col-type">Type</th><th class="col-actions">Actions</th></tr></thead>
             <tbody>
             {% for it in items %}
               <tr>
                 <td>{{ loop.index }}</td>
-                <td>{{ it.site }}</td>
+                <td title="{{ it.site }}">
+                  {% set href = it.site %}
+                  {% if not href.startswith('http://') and not href.startswith('https://') %}
+                    {% set href = 'http://' + href %}
+                  {% endif %}
+                  <a href="{{ href }}" target="_blank" rel="noopener noreferrer">{{ it.site }}</a>
+                </td>
                 <td>{{ it.username }}</td>
                 <td><code>{{ it.password }}</code></td>
-                <td>{{ it.description or '' }}</td>
-                <td>
+                <td title="{{ it.description or '' }}">{{ it.description or '' }}</td>
+                <td>{{ it.type or 'personal' }}</td>
+                <td class="col-actions">
+                  <a class="btn small secondary" href="{{ url_for('edit', entry_id=it.id) }}">Edit</a>
                   <form method="post" action="/delete/{{ it.id }}" onsubmit="return confirm('Delete this entry?')">
                     <button class="btn small" type="submit">Delete</button>
                   </form>

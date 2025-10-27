@@ -1,7 +1,7 @@
 :root{--bg:#0f172a;--card:#0b1220;--muted:#94a3b8;--accent:#facc15;--text:#e6eef8}
 *{box-sizing:border-box}
 body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#071029 0%,#071829 100%);color:var(--text);margin:0;min-height:100vh}
-.container{max-width:900px;margin:24px auto;padding:16px}
+.container{max-width:1400px;margin:24px auto;padding:16px}
 .top{background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.03)}
 .top .container{display:flex;align-items:center;justify-content:space-between}
 .card{background:var(--card);padding:16px;border-radius:8px;margin-bottom:16px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
@@ -12,6 +12,38 @@ h1,h2{margin:0 0 12px}
 input{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px;border-radius:6px;color:var(--text)}
 .btn{background:var(--accent);color:#001; border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
 .btn.small{padding:4px 8px;font-size:90%}
-.table{width:100%;border-collapse:collapse}
-table th,table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left}
+/* Table uses fixed layout and percentage columns so it fits the card without horizontal scrolling */
+.card .table{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+table th,table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left;vertical-align:middle}
+
+/* Make table cells single-line with ellipsis to keep rows compact */
+
+table td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+table th{white-space:nowrap}
+
+/* Slightly reduce monospace code font so displayed passwords take less space */
+.table td code{font-size:90%;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Liberation Mono', monospace}
+
+/* Per-column width helpers (adjust to preference) */
+.col-site{width:40%}
+.col-username{width:10%}
+.col-password{width:10%}
+.col-description{width:35%}
+.col-type{width:5%}
+/* Actions column: give slightly more room and allow visible overflow so buttons aren't clipped */
+.col-actions{width:8%}
+.table td.col-actions{overflow:visible;white-space:nowrap;text-overflow:clip;display:flex;gap:8px;align-items:center}
+
+/* Secondary button style (for Edit) */
+.btn.secondary{background:var(--accent);color:#001;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.btn.secondary:hover{filter:brightness(0.95)}
+.btn.small.secondary{padding:4px 8px;font-size:90%}
+
+/* Limit input/select size in the add form so layout stays compact */
+.form-inline input,.form-inline select{min-width:120px;max-width:240px}
+.form-inline input[placeholder]{width:160px}
 .msg.error{background:#2b0b0b;color:#ffd6d6;padding:8px;border-radius:6px}
+
+/* Make links white (normal and hover) for table and top nav */
+.table a, .top nav a { color: #ffffff; text-decoration: underline; }
+.table a:hover, .table a:focus, .top nav a:hover, .top nav a:focus { color: #ffffff; text-decoration: underline; }
