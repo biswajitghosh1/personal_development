@@ -64,4 +64,5 @@ If you want to iterate quickly without rebuilding the image, the compose file in
 - If clipboard copy doesn't work in some browsers when opened as a `file://` URL, use the HTTP server or Docker approach described above.
 
 ## License & copyright
+
 © 2025 Biswajit Ghosh

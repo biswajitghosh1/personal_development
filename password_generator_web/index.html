@@ -37,7 +37,17 @@
           </div>
         </div>
 
-        <p id="msg" class="msg"></p>
+        <div class="strength">
+          <div class="meter" aria-hidden="true">
+            <div class="meter-fill" id="meter-fill" style="width:0%"></div>
+          </div>
+          <p id="meter-label" class="msg" aria-live="polite" aria-atomic="true">Strength: —</p>
+        </div>
+
+  <p id="msg" class="msg" aria-live="polite" aria-atomic="true"></p>
+
+  <!-- Screen-reader-only live region for concise announcements -->
+  <div id="a11y" class="sr-only" aria-live="polite" aria-atomic="true"></div>
       </form>
 
   <p class="help">Tip: leave a field blank to use sensible defaults. Enter characters in the "Letters" field to include them as part of the character pool.</p>
