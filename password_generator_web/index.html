@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="center">
+      <h1>Password Generator</h1>
+
+      <form id="pw-form" class="card" onsubmit="return false;" aria-labelledby="pw-form">
+        <label for="letters">Letters (characters to include)</label>
+        <input id="letters" placeholder="e.g. abcdef0123" />
+
+        <label for="numbers">Numbers (characters to include; leave blank for 0-9)</label>
+        <input id="numbers" placeholder="e.g. 0123456789" />
+
+        <label for="symbols">Symbols (leave blank for default: !@#$%&*)</label>
+        <input id="symbols" placeholder="e.g. !@#$%&*" />
+
+        <div class="row">
+          <label for="length">Password length</label>
+          <input id="length" type="number" min="4" max="256" value="16" />
+        </div>
+
+        <div class="row center-opts">
+          <button id="generate" class="btn">Generate</button>
+        </div>
+
+        <div class="result">
+          <input id="result" readonly aria-label="Generated password" />
+          <div class="result-actions">
+            <button id="copy" class="btn small">Copy</button>
+            <button id="regen" class="btn ghost small">Regenerate</button>
+          </div>
+        </div>
+
+        <p id="msg" class="msg"></p>
+      </form>
+
+  <p class="help">Tip: leave a field blank to use sensible defaults. Enter characters in the "Letters" field to include them as part of the character pool.</p>
+    </main>
+
+    <footer class="site-footer">© 2025 Biswajit Ghosh</footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
