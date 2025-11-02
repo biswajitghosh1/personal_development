@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Document URL Tracker</title>
+  <link rel="stylesheet" href="static/styles.css" />
+  <script src="static/app.js" defer></script>
+</head>
+<body>
+  <div class="app-wrap">
+    <header class="top">
+      <div class="logo-wrap">
+        <img src="static/logo.svg" alt="DocTrack logo" class="logo" />
+        <div>
+          <h1>DocTrack</h1>
+          <p class="tag">Track document URLs — add notes, sections and descriptions</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="panel form-panel">
+        <h2>Add document</h2>
+        <form id="add-form">
+          <label>Section
+            <input id="field-section" placeholder="e.g. Policies, Onboarding" required />
+          </label>
+
+          <label>Description
+            <input id="field-desc" placeholder="Short description or title" />
+          </label>
+
+          <label>Document URLs (one per line or comma-separated)
+            <textarea id="field-urls" rows="3" placeholder="https://example.com/doc.pdf"></textarea>
+          </label>
+
+          <label>Notes
+            <textarea id="field-notes" rows="2" placeholder="Optional notes"></textarea>
+          </label>
+
+          <div class="form-row">
+            <button type="submit" class="btn primary">Add</button>
+            <button type="button" id="export-btn" class="btn">Export JSON</button>
+            <button type="button" id="import-btn" class="btn">Import JSON</button>
+            <button type="button" id="clear-btn" class="btn danger">Clear All</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel list-panel">
+        <div class="list-top">
+          <h2>Saved documents</h2>
+          <div class="controls">
+            <input id="search" placeholder="Search by section/description/notes" />
+            <select id="filter-section"><option value="">All sections</option></select>
+          </div>
+        </div>
+
+        <div id="items" class="items"></div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <small>Responsive, cross-platform static app. Data stored locally in your browser.</small>
+      <small style="display:block;margin-top:8px">&copy; 2025 Biswajit Ghosh</small>
+    </footer>
+  </div>
+
+  <!-- hidden file input for import -->
+  <input id="file-import" type="file" accept="application/json" style="display:none" />
+</body>
+</html>

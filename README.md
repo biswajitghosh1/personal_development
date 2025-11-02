@@ -1,51 +1,173 @@
-# Introduction
-This repository will host and keep a track of security tools which is being tested and will also have the projects and applications created for this purpose. This is completely a hobby and should be treated as such without any explicit or implicit warranty.
+# personal_development
 
-# Installation & Git setup (VSCode, SSH keys, GPG keys, GitHub)
+A personal workspace for small projects, experiments, and utilities — mostly hobby projects, prototypes, and notes. The repository contains multiple small apps (Python, Node, static web) and supportive scripts used for personal development and learning.
 
-This document provides step-by-step instructions to:
-- Install Visual Studio Code (VSCode)
-- Create and install an SSH key for GitHub
-- Create and install a GPG key for commit signing
-- Configure Git and VSCode to use those keys
+This README gives a short overview, where to find each project, and quick start instructions for the most relevant subprojects.
 
-Use the instructions that match your OS (Windows / macOS / Linux). Replace example emails and filenames with your own values.
+## Repository layout
 
----
+- `password_vault/` — Flask-based password vault web app (app.py, Dockerfile, docker-compose). See the folder README for run instructions.
+- `personal_development/` — meta folder for notes and smaller experiments (the current repo root). Contains `generative_AI/` notes and other resources.
+- `generative_AI/` — notes and experiments related to generative AI (e.g. `Notes.md`).
+- `rss_reader_app/` — small Python RSS reader demo (app.py, requirements.txt).
+- `wordlist_generator/` — Python package for generating wordlists (pyproject.toml, tests).
+- `WIP/` — assorted work-in-progress projects and front-end prototypes.
 
-## 1. Prerequisites
-- A GitHub account
-- Administrative or install privileges on your machine
-- Git installed and on your PATH
-- Recommended: use Git Bash on Windows or WSL for UNIX-like tooling
+Each subfolder is a self-contained mini-project — check the folder for a README, `requirements.txt`, or `package.json` for project-specific instructions.
 
----
+## Quick start — common tasks
 
-## 2. Install Visual Studio Code
+Open the repository in VS Code (recommended):
 
-1. Download the stable installer:
-   - Windows: https://code.visualstudio.com/
-   - macOS: https://code.visualstudio.com/
-   - Linux: use distro package manager or download the .deb/.rpm from the site.
-
-2. Install and open VSCode.
-
-3. Recommended settings and extensions:
-   - Settings Sync: enable to sync settings across machines (Sign in with GitHub or Microsoft).
-   - Extensions: GitLens, Git Graph, Prettier, ESLint, Python (if relevant), Remote - WSL (Windows WSL users).
-   - Configure your Git user (see section 5).
-
-4. Optional: Enable Auto Fetch and set preferred shell in VSCode terminal.
-
----
-
-## 3. Create an SSH key (for Git operations)
-
-Preferred key type: ed25519. Use RSA 4096 if ed25519 is unavailable.
-
-Linux / macOS / Git Bash (Windows):
 ```sh
-# Generate key (replace email)
-ssh-keygen -t ed25519 -C "your.email@example.com" -f ~/.ssh/id_ed25519
-# Or RSA:
-# ssh-keygen -t rsa -b 4096 -C "your.email@example.com" -f ~/.ssh/id_rsa
+code .
+```
+
+Search for the subproject you want to run and follow its README. Typical commands by project type:
+
+- Python (virtualenv):
+
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python app.py
+```
+
+- Docker / docker-compose (for services with Dockerfiles):
+
+```sh
+docker compose up --build
+```
+
+
+
+
+- Node (if a `package.json` exists):
+
+```sh
+cd <project-folder>
+npm install
+npm start
+```
+
+## How to run locally (detailed)
+
+This section contains step-by-step instructions for running the most common project types found in this repository on macOS (zsh). Adjust commands for Linux/Windows where appropriate.
+
+General Python projects
+
+1. Create and activate a virtual environment:
+
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+1. Install dependencies and run the app (if a `requirements.txt` exists):
+
+```sh
+pip install -r requirements.txt
+python app.py
+```
+
+Notes:
+
+- If the project uses `flask` and expects the `FLASK_APP` env var, you can run:
+
+  ```sh
+  export FLASK_APP=app.py
+  export FLASK_ENV=development
+  flask run --host=0.0.0.0 --port=5000
+  ```
+
+- Some projects may provide an explicit entrypoint (for example `manage.py` or a `run.sh`). Prefer the project README if present.
+
+password_vault (example)
+
+From the repository root:
+
+```sh
+cd password_vault
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+# if app.py is the entrypoint
+python app.py
+```
+
+Common gotchas:
+
+- Ensure any required environment variables (database URLs, secret keys) are set. If the project expects a `.env` file, create one and keep it out of git.
+- If the app binds to `127.0.0.1` and you want external access, either set the host in the app or run `flask run --host=0.0.0.0`.
+
+rss_reader_app (example)
+
+```sh
+cd rss_reader_app
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python app.py
+```
+
+Using Docker / docker-compose
+
+If a project has a `Dockerfile` and/or `docker-compose.yml`, you can run it with Docker:
+
+```sh
+cd <project-folder>
+docker compose up --build
+```
+
+This will build the image and start any configured services. Use `docker compose down` to stop and remove containers.
+
+Environment variables & secrets
+
+- Never commit secrets to the repository. Use a `.env` file (and add it to `.gitignore`) or export them in your shell before running.
+- Example `.env` pattern:
+
+```env
+SECRET_KEY=changeme
+DATABASE_URL=sqlite:///data.db
+```
+
+Troubleshooting
+
+- If you see missing package errors, re-run `pip install -r requirements.txt` inside the activated venv.
+- For port conflicts, either change the port or stop the process using the port (`lsof -i :5000`).
+- If a project uses a different Python version, use `pyenv` or the system package manager to install the appropriate interpreter.
+
+Adjust ports and environment variables as documented in the individual project folders.
+
+## Development notes
+
+- Keep secrets out of the repository. Use environment variables, `.env` files (gitignored), or a secrets manager.
+- Tests, when present, live next to the project (e.g. `wordlist_generator/tests`). Use the project’s test runner (pytest for Python projects).
+
+## Contribution & workflow
+
+This is a personal repo, but if you want to suggest changes:
+
+1. Fork or create a branch.
+2. Make small, focused commits with clear messages.
+3. Open a PR with a description of the change and any verification steps.
+
+## Useful commands
+
+- Open repository in VS Code: `code .`
+- Run a Python app (example): `python app.py`
+- Run docker compose: `docker compose up --build`
+
+## License
+
+Most projects in this repository are small personal utilities and experiments. Check each subfolder for a LICENSE file. If none exists, treat them as personal code; contact the owner for reuse permissions.
+
+---
+
+If you want, I can also:
+
+- Add per-project README stubs for missing folders.
+- Create a top-level CONTRIBUTING.md with preferred workflow and commit signing notes.
+
+Last updated: 2025-11-02

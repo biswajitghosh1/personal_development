@@ -1,3 +1,0 @@
-Tkinter
-pytest
-PyQt5
