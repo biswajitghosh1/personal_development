@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Investment Tracker</h1>
+        <div id="login-section">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button id="login-btn">Login</button>
+        </div>
+        <div id="budget-section" style="display:none;">
+            <h2>Create Budget (INR)</h2>
+            <input type="number" id="budget-amount" placeholder="Budget Amount">
+            <button id="create-budget-btn">Create Budget</button>
+        </div>
+        <div id="tracker-section" style="display:none;">
+            <h2>Investment Tracker</h2>
+            <!-- Investment tracking content here -->
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
