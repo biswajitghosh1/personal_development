@@ -20,14 +20,33 @@
   const filterSection = el('filter-section');
 
   let items = [];
+  let useApi = false;
+  let editId = null; // when editing an API-backed item
 
-  function load(){
-    try { items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-    catch(e){ items = []; }
+  // detect API availability (simple ping)
+  async function detectApi(){
+    try{
+      const res = await fetch('/api/ping');
+      if(res.ok){ useApi = true; }
+    }catch(e){ useApi = false; }
+  }
+
+  async function load(){
+    await detectApi();
+    if(useApi){
+      try{
+        const res = await fetch('/api/items');
+        items = await res.json();
+      }catch(e){ console.warn('API load failed, falling back to localStorage', e); items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    }else{
+      try { items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+      catch(e){ items = []; }
+    }
     render();
   }
 
   function save(){
+    // local persistence only — API saves happen per-request
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }
 
@@ -82,19 +101,40 @@
     el('field-desc').value = it.desc || '';
     el('field-urls').value = (it.urls||[]).join('\n');
     el('field-notes').value = it.notes || '';
-    // remove old and set form submit to replace
+    // if this item has an id (API mode), set editId so submit will update
+    editId = it.id || null;
+    // remove local copy so form behaves like replace
     items.splice(idx,1);
     save(); render();
   }
 
-  form.addEventListener('submit', e =>{
+  form.addEventListener('submit', async e =>{
     e.preventDefault();
     const section = el('field-section').value.trim();
     const desc = el('field-desc').value.trim();
     const urls = parseUrls(el('field-urls').value);
     const notes = el('field-notes').value.trim();
-    items.unshift({section, desc, urls, notes, created: Date.now()});
-    save(); render();
+
+    if(useApi && editId){
+      // update via API
+      try{
+        const res = await fetch('/api/items/' + editId, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({section, desc, urls, notes})});
+        const updated = await res.json();
+        items.unshift(updated);
+      }catch(e){ alert('Update failed: ' + e.message); }
+      editId = null;
+    } else if(useApi){
+      try{
+        const res = await fetch('/api/items', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({section, desc, urls, notes})});
+        const created = await res.json();
+        items.unshift(created);
+      }catch(e){ alert('Create failed: ' + e.message); }
+    } else {
+      items.unshift({section, desc, urls, notes, created: Date.now()});
+      save();
+    }
+
+    render();
     form.reset();
   });
 
@@ -110,15 +150,36 @@
     try {
       const txt = await f.text(); const json = JSON.parse(txt);
       if(!Array.isArray(json)) throw new Error('Invalid JSON');
-      // merge
-      items = json.concat(items);
-      save(); render();
+      if(useApi){
+        // post to API import endpoint
+        const res = await fetch('/api/import', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(json)});
+        const created = await res.json();
+        items = created.concat(items);
+      } else {
+        items = json.concat(items);
+        save();
+      }
+      render();
       alert('Imported ' + json.length + ' items');
     } catch(e){ alert('Import failed: ' + e.message); }
     fileImport.value = '';
   });
 
-  clearBtn.addEventListener('click', ()=>{ if(confirm('Remove all saved items?')){ items=[]; save(); render(); }});
+  clearBtn.addEventListener('click', async ()=>{
+    if(!confirm('Remove all saved items?')) return;
+    if(useApi){
+      // naive: delete items individually
+      try{
+        const ids = items.map(i=>i.id).filter(Boolean);
+        for(const id of ids){ await fetch('/api/items/' + id, {method:'DELETE'}); }
+        items = [];
+      }catch(e){ alert('Failed to clear via API: ' + e.message); }
+    } else {
+      items = [];
+      save();
+    }
+    render();
+  });
 
   search && search.addEventListener('input', ()=> render());
   filterSection && filterSection.addEventListener('change', ()=>{
