@@ -29,7 +29,7 @@ def init_db():
             username TEXT NOT NULL,
             password TEXT NOT NULL,
             description TEXT,
-            type TEXT DEFAULT 'personal',
+            type TEXT DEFAULT 'others',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
         '''
@@ -44,7 +44,7 @@ conn = get_db_connection()
 cur = conn.execute("PRAGMA table_info(entries)")
 cols = [r['name'] for r in cur.fetchall()]
 if 'type' not in cols:
-    conn.execute("ALTER TABLE entries ADD COLUMN type TEXT DEFAULT 'personal'")
+    conn.execute("ALTER TABLE entries ADD COLUMN type TEXT DEFAULT 'others'")
     conn.commit()
 conn.close()
 
@@ -84,7 +84,7 @@ def index():
         pwd = request.form.get('pwd')
         desc = request.form.get('description')
         if site and uname and pwd:
-            etype = request.form.get('type') or 'personal'
+            etype = (request.form.get('type') or 'others').lower()
             conn = get_db_connection()
             conn.execute(
                 'INSERT INTO entries (site, username, password, description, type) VALUES (?, ?, ?, ?, ?)',
@@ -124,7 +124,7 @@ def edit(entry_id):
         uname = request.form.get('uname')
         pwd = request.form.get('pwd')
         desc = request.form.get('description')
-        etype = request.form.get('type') or 'personal'
+        etype = (request.form.get('type') or 'others').lower()
         conn.execute(
             'UPDATE entries SET site = ?, username = ?, password = ?, description = ?, type = ? WHERE id = ?',
             (site, uname, pwd, desc, etype, entry_id)

@@ -25,9 +25,9 @@
           <input name="pwd" placeholder="password" required value="{{ item.password }}">
           <input name="description" placeholder="description (optional)" value="{{ item.description or '' }}">
           <select name="type" aria-label="entry type">
-            <option value="personal" {% if item.type == 'personal' %}selected{% endif %}>Personal</option>
-            <option value="project" {% if item.type == 'project' %}selected{% endif %}>Project</option>
-            <option value="official" {% if item.type == 'official' %}selected{% endif %}>Official</option>
+            <option value="bank" {% if item.type == 'bank' %}selected{% endif %}>Bank</option>
+            <option value="investment" {% if item.type == 'investment' %}selected{% endif %}>Investment</option>
+            <option value="others" {% if (item.type or 'others') == 'others' %}selected{% endif %}>Others</option>
           </select>
           <button class="btn" type="submit">Save</button>
           <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
