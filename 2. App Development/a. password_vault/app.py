@@ -11,8 +11,8 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('VAULT_SECRET', 'change-me')
 
 # Static credentials (for demo only)
-USERNAME = os.environ.get('VAULT_USER', 'admin')
-PASSWORD = os.environ.get('VAULT_PASS', 'password')
+USERNAME = os.environ.get('VAULT_USER', 'biswajit')
+PASSWORD = os.environ.get('VAULT_PASS', 'Somrit@123')
 
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
@@ -64,6 +64,8 @@ def login():
         p = request.form.get('password')
         if u == USERNAME and p == PASSWORD:
             session['logged_in'] = True
+            # store the username so templates can show a welcome message
+            session['user'] = u
             return redirect(url_for('index'))
         error = 'Invalid credentials'
     return render_template('login.html', error=error)

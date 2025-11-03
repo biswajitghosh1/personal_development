@@ -10,6 +10,9 @@
     <header class="top">
       <div class="container">
         <h1>Password Vault - Official and Project</h1>
+        {% if session.get('logged_in') %}
+          <p class="welcome">Welcome {{ session.get('user') }}</p>
+        {% endif %}
         <nav><a href="/logout">Sign out</a></nav>
       </div>
     </header>
@@ -30,7 +33,7 @@
       </section>
 
       <section class="card">
-        <h2>Stored items ({{ items|length }})</h2>
+        <h2>Login Details Saved ({{ items|length }})</h2>
         {% if items %}
           <table class="table">
             <thead><tr><th>#</th><th class="col-site">Site</th><th class="col-username">Username</th><th class="col-password">Password</th><th class="col-description">Description</th><th class="col-type">Type</th><th class="col-actions">Actions</th></tr></thead>
@@ -64,5 +67,8 @@
         {% endif %}
       </section>
     </main>
+  <footer class="site-footer">
+    <div class="inner">&copy; 2025 Biswajit Ghosh</div>
+  </footer>
   </body>
 </html>

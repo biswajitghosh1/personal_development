@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Edit entry - Password Vault</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <header class="top">
+      <div class="container">
+        <h1>Edit entry</h1>
+        {% if session.get('logged_in') %}
+          <p class="welcome">Welcome {{ session.get('user') }}</p>
+        {% endif %}
+        <nav><a href="/logout">Sign out</a></nav>
+      </div>
+    </header>
+    <main class="container">
+      <section class="card">
+        <h2>Edit</h2>
+        <form method="post" class="form-inline">
+          <input name="site" placeholder="site or url" required value="{{ item.site }}">
+          <input name="uname" placeholder="username" required value="{{ item.username }}">
+          <input name="pwd" placeholder="password" required value="{{ item.password }}">
+          <input name="description" placeholder="description (optional)" value="{{ item.description or '' }}">
+          <select name="type" aria-label="entry type">
+            <option value="personal" {% if item.type == 'personal' %}selected{% endif %}>Personal</option>
+            <option value="project" {% if item.type == 'project' %}selected{% endif %}>Project</option>
+            <option value="official" {% if item.type == 'official' %}selected{% endif %}>Official</option>
+          </select>
+          <button class="btn" type="submit">Save</button>
+          <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
+        </form>
+      </section>
+    </main>
+  <footer class="site-footer">
+    <div class="inner">&copy; 2025 Biswajit Ghosh</div>
+  </footer>
+  </body>
+</html>
