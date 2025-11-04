@@ -61,7 +61,18 @@ def ping():
 
 @app.route('/api/items', methods=['GET'])
 def get_items():
-    items = Item.query.order_by(Item.created.desc()).all()
+    q = request.args.get('q', '').strip().lower()
+    query = Item.query
+    
+    if q:
+        # Search across multiple fields using LIKE
+        query = query.filter(db.or_(
+            db.func.lower(Item.section).like(f'%{q}%'),
+            db.func.lower(Item.desc).like(f'%{q}%'),
+            db.func.lower(Item.notes).like(f'%{q}%')
+        ))
+    
+    items = query.order_by(Item.created.desc()).all()
     return jsonify([it.to_dict() for it in items])
 
 

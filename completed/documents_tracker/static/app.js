@@ -31,18 +31,19 @@
     }catch(e){ useApi = false; }
   }
 
-  async function load(){
+  async function load(searchQuery = ''){
     await detectApi();
     if(useApi){
       try{
-        const res = await fetch('/api/items');
+        const url = '/api/items' + (searchQuery ? `?q=${encodeURIComponent(searchQuery)}` : '');
+        const res = await fetch(url);
         items = await res.json();
       }catch(e){ console.warn('API load failed, falling back to localStorage', e); items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
     }else{
       try { items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
       catch(e){ items = []; }
     }
-    render();
+    render(searchQuery);
   }
 
   function save(){
@@ -55,12 +56,13 @@
     return text.split(/\s*[\n,]+\s*/).map(s=>s.trim()).filter(Boolean);
   }
 
-  function render(){
+  function render(searchQuery = ''){
     itemsWrap.innerHTML = '';
     const sections = new Set();
-    const qStr = (search && search.value && search.value.trim().toLowerCase()) || '';
+    const qStr = searchQuery || ((search && search.value && search.value.trim().toLowerCase()) || '');
 
-    const list = items.filter(it => {
+    // Only filter client-side if not using API
+    const list = useApi ? items : items.filter(it => {
       if(!qStr) return true;
       const hay = (it.section + ' ' + it.desc + ' ' + it.notes).toLowerCase();
       return hay.includes(qStr);
@@ -181,7 +183,16 @@
     render();
   });
 
-  search && search.addEventListener('input', ()=> render());
+  search && search.addEventListener('input', (e) => {
+    const searchQuery = e.target.value.trim().toLowerCase();
+    if (useApi) {
+      // Debounce server-side search with 300ms delay
+      clearTimeout(window._searchTimer);
+      window._searchTimer = setTimeout(() => load(searchQuery), 300);
+    } else {
+      render(searchQuery);
+    }
+  });
   filterSection && filterSection.addEventListener('change', ()=>{
     const v = filterSection.value;
     if(!v) return load();

@@ -8,6 +8,20 @@ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
 .top .container h1{margin:0 auto}
 .card{background:var(--card);padding:16px;border-radius:8px;margin-bottom:16px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
 h1,h2{margin:0 0 12px}
+.search-form{display:flex;gap:8px;align-items:center}
+.search-form input[type="search"]{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  color:var(--text);
+  padding:8px 12px;
+  border-radius:4px;
+  font-size:14px
+}
+.search-form input[type="search"]:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(250,204,21,0.2)
+}
 .muted{color:var(--muted)}
 .form{display:flex;flex-direction:column;gap:8px}
 .form-inline{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}

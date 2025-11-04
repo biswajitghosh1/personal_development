@@ -94,8 +94,23 @@ def index():
             conn.close()
         return redirect(url_for('index'))
 
+    search_query = request.args.get('q', '').strip()
     conn = get_db_connection()
-    rows = conn.execute('SELECT * FROM entries ORDER BY id DESC').fetchall()
+    
+    if search_query:
+        # Search across site, username, and description fields
+        query = '''
+            SELECT * FROM entries 
+            WHERE site LIKE ? 
+            OR username LIKE ? 
+            OR description LIKE ?
+            ORDER BY id DESC
+        '''
+        search_pattern = f'%{search_query}%'
+        rows = conn.execute(query, (search_pattern, search_pattern, search_pattern)).fetchall()
+    else:
+        rows = conn.execute('SELECT * FROM entries ORDER BY id DESC').fetchall()
+    
     conn.close()
     items = [dict(r) for r in rows]
     return render_template('index.html', items=items)

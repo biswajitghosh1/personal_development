@@ -34,7 +34,22 @@
       </section>
 
       <section class="card">
-        <h2>Login Details Saved ({{ items|length }})</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h2>Login Details Saved ({{ items|length }})</h2>
+          <form method="get" class="search-form" style="margin: 0;">
+            <input 
+              type="search" 
+              name="q" 
+              placeholder="Search sites, usernames..." 
+              value="{{ request.args.get('q', '') }}"
+              style="min-width: 250px;"
+            >
+            <button class="btn secondary" type="submit">Search</button>
+            {% if request.args.get('q') %}
+              <a href="{{ url_for('index') }}" class="btn">Clear</a>
+            {% endif %}
+          </form>
+        </div>
         {% if items %}
           <table class="table">
             <thead><tr><th>#</th><th class="col-site">Site</th><th class="col-username">Username</th><th class="col-password">Password</th><th class="col-description">Description</th><th class="col-type">Type</th><th class="col-actions">Actions</th></tr></thead>
