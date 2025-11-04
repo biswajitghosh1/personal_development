@@ -11,8 +11,8 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('VAULT_SECRET', 'change-me')
 
 # Static credentials (for demo only)
-USERNAME = os.environ.get('VAULT_USER', 'biswajit')
-PASSWORD = os.environ.get('VAULT_PASS', 'Somrit@123')
+USERNAME = os.environ.get('VAULT_USER', 'admin')
+PASSWORD = os.environ.get('VAULT_PASS', 'password')
 
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
@@ -21,6 +21,8 @@ def get_db_connection():
 
 def init_db():
     conn = get_db_connection()
+    # Drop existing table and recreate with schema
+    conn.execute('DROP TABLE IF EXISTS entries')
     conn.execute(
         '''
         CREATE TABLE IF NOT EXISTS entries (
@@ -29,7 +31,6 @@ def init_db():
             username TEXT NOT NULL,
             password TEXT NOT NULL,
             description TEXT,
-            type TEXT DEFAULT 'others',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
         '''
@@ -38,15 +39,6 @@ def init_db():
     conn.close()
 
 init_db()
-
-# Lightweight migration: ensure 'type' column exists
-conn = get_db_connection()
-cur = conn.execute("PRAGMA table_info(entries)")
-cols = [r['name'] for r in cur.fetchall()]
-if 'type' not in cols:
-    conn.execute("ALTER TABLE entries ADD COLUMN type TEXT DEFAULT 'others'")
-    conn.commit()
-conn.close()
 
 def login_required(f):
     @wraps(f)
@@ -84,11 +76,10 @@ def index():
         pwd = request.form.get('pwd')
         desc = request.form.get('description')
         if site and uname and pwd:
-            etype = (request.form.get('type') or 'others').lower()
             conn = get_db_connection()
             conn.execute(
-                'INSERT INTO entries (site, username, password, description, type) VALUES (?, ?, ?, ?, ?)',
-                (site, uname, pwd, desc, etype)
+                'INSERT INTO entries (site, username, password, description) VALUES (?, ?, ?, ?)',
+                (site, uname, pwd, desc)
             )
             conn.commit()
             conn.close()
@@ -139,10 +130,9 @@ def edit(entry_id):
         uname = request.form.get('uname')
         pwd = request.form.get('pwd')
         desc = request.form.get('description')
-        etype = (request.form.get('type') or 'others').lower()
         conn.execute(
-            'UPDATE entries SET site = ?, username = ?, password = ?, description = ?, type = ? WHERE id = ?',
-            (site, uname, pwd, desc, etype, entry_id)
+            'UPDATE entries SET site = ?, username = ?, password = ?, description = ? WHERE id = ?',
+            (site, uname, pwd, desc, entry_id)
         )
         conn.commit()
         conn.close()

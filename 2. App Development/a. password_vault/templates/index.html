@@ -24,11 +24,6 @@
           <input name="uname" placeholder="username" required>
           <input name="pwd" placeholder="password" required>
           <input name="description" placeholder="description (optional)">
-          <select name="type" aria-label="entry type">
-            <option value="bank">Bank</option>
-            <option value="investment">Investment</option>
-            <option value="others">Others</option>
-          </select>
           <button class="btn" type="submit">Add</button>
         </form>
       </section>
@@ -46,13 +41,15 @@
             >
             <button class="btn secondary" type="submit">Search</button>
             {% if request.args.get('q') %}
-              <a href="{{ url_for('index') }}" class="btn">Clear</a>
+              <a href="{{ url_for('index') }}" class="btn secondary server-clear">Clear</a>
             {% endif %}
+            <!-- client-side clear button (hidden until there's input) -->
+            <button id="clear-search" type="button" class="btn secondary" style="display:none;">Clear</button>
           </form>
         </div>
         {% if items %}
           <table class="table">
-            <thead><tr><th>#</th><th class="col-site">Site</th><th class="col-username">Username</th><th class="col-password">Password</th><th class="col-description">Description</th><th class="col-type">Type</th><th class="col-actions">Actions</th></tr></thead>
+            <thead><tr><th>#</th><th class="col-site">Site</th><th class="col-username">Username</th><th class="col-password">Password</th><th class="col-description">Description</th><th class="col-actions">Actions</th></tr></thead>
             <tbody>
             {% for it in items %}
               <tr>
@@ -67,7 +64,6 @@
                 <td>{{ it.username }}</td>
                 <td><code>{{ it.password }}</code></td>
                 <td title="{{ it.description or '' }}">{{ it.description or '' }}</td>
-                <td>{{ (it.type or 'others')|title }}</td>
                 <td class="col-actions">
                   <a class="btn small secondary" href="{{ url_for('edit', entry_id=it.id) }}">Edit</a>
                   <form method="post" action="/delete/{{ it.id }}" onsubmit="return confirm('Delete this entry?')">
@@ -86,5 +82,63 @@
   <footer class="site-footer">
     <div class="inner">&copy; 2025 Biswajit Ghosh</div>
   </footer>
+  <script>
+    (function(){
+      const form = document.querySelector('.search-form');
+      if(!form) return;
+      const input = form.querySelector('input[name="q"]');
+      const tbody = document.querySelector('.table tbody');
+      const clearBtn = document.getElementById('clear-search');
+      const serverClear = form.querySelector('.server-clear');
+      if(!input || !tbody) return;
+
+      // Prevent the form from submitting (we'll filter client-side)
+      form.addEventListener('submit', function(e){ e.preventDefault(); });
+
+      function normalize(s){ return (s || '').toString().trim().toLowerCase(); }
+
+      function filterRows(){
+        const q = normalize(input.value);
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        if(!q){ rows.forEach(r => r.style.display = ''); return; }
+        rows.forEach(r => {
+          // columns: 1 -> #, 2 -> site, 3 -> username, 4 -> password, 5 -> description, 6 -> actions
+          const site = normalize(r.querySelector('td:nth-child(2)')?.textContent);
+          const username = normalize(r.querySelector('td:nth-child(3)')?.textContent);
+          const description = normalize(r.querySelector('td:nth-child(5)')?.textContent);
+          const hay = site + ' ' + username + ' ' + description;
+          r.style.display = hay.includes(q) ? '' : 'none';
+        });
+      }
+
+      // Debounce input to avoid excessive work
+      let timer = null;
+      function updateClearVisibility(){
+        const has = normalize(input.value) !== '';
+        if(clearBtn) clearBtn.style.display = has ? '' : 'none';
+        if(serverClear) serverClear.style.display = has ? 'none' : '';
+      }
+
+      input.addEventListener('input', function(){
+        clearTimeout(timer);
+        timer = setTimeout(function(){ filterRows(); updateClearVisibility(); }, 150);
+      });
+
+      if(clearBtn){
+        clearBtn.addEventListener('click', function(){
+          input.value = '';
+          filterRows();
+          input.focus();
+          updateClearVisibility();
+        });
+      }
+
+      // Initial state
+      updateClearVisibility();
+      // If the form was rendered with a server-side query, run filter initially
+      if(input.value && input.value.trim() !== '') filterRows();
+    })();
+  </script>
+
   </body>
 </html>
