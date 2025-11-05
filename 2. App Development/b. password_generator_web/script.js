@@ -53,11 +53,34 @@ function buildPassword(){
   return out;
 }
 
+async function savePassword(password) {
+  try {
+    const response = await fetch('http://localhost:5000/passwords', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to save password');
+    }
+    msgEl.textContent = 'Password saved to database.';
+    setTimeout(() => msgEl.textContent = '', 2500);
+  } catch (error) {
+    console.error('Error:', error);
+    msgEl.textContent = 'Failed to save password to database.';
+    setTimeout(() => msgEl.textContent = '', 2500);
+  }
+}
+
 function generateAndShow(){
   const pw = buildPassword();
   if(!pw) return;
   resultEl.value = pw;
   updateStrength(pw);
+  savePassword(pw);
 }
 
 generateBtn.addEventListener('click', ()=>{
