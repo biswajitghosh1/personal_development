@@ -114,4 +114,4 @@ docker compose up --build
 This project is licensed under GNU GPL v3 - see [`personal_development/LICENSE`](personal_development/LICENSE) for details.
 Individual projects may have their own licensing terms.
 
-Last updated: 2025-11-05
+Last updated: 2025-11-05 by Biswajit Ghosh
