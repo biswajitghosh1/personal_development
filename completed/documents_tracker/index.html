@@ -43,6 +43,7 @@
             <button type="submit" class="btn primary">Add</button>
             <button type="button" id="export-btn" class="btn">Export JSON</button>
             <button type="button" id="import-btn" class="btn">Import JSON</button>
+            <button type="button" id="migrate-btn" class="btn">Migrate local → server</button>
             <button type="button" id="clear-btn" class="btn danger">Clear All</button>
           </div>
         </form>
@@ -52,7 +53,7 @@
         <div class="list-top">
           <h2>Saved documents</h2>
           <div class="controls">
-            <input id="search" placeholder="Search by section/description/notes" />
+            <input id="search" placeholder="Search by section, description, notes, or any other content" />
             <select id="filter-section"><option value="">All sections</option></select>
           </div>
         </div>
@@ -62,7 +63,7 @@
     </main>
 
     <footer class="foot">
-      <small>Responsive, cross-platform static app. Data stored locally in your browser.</small>
+      <small>Responsive, cross-platform static app.</small>
       <small style="display:block;margin-top:8px">&copy; 2025 Biswajit Ghosh</small>
     </footer>
   </div>

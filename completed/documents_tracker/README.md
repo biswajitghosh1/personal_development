@@ -1,140 +1,90 @@
 # DocTrack — Document URL Tracker
 
-Minimal static web app to track document URLs with section, description and notes. Data is stored in browser `localStorage`.
+A Flask web application to track document URLs with sections, descriptions, and notes. Features a SQLite database for persistent storage and a modern web interface.
 
-Files added
-- `index.html` — app entry
-- `static/styles.css` — styles (subtle red/yellow theme)
-- `static/app.js` — app logic (add/edit/delete, import/export)
-- `static/logo.svg` — simple logo
+## Features
 
-Run locally
-1. Start a static server in the repo root:
+- Add and organize documents with sections, descriptions, and URLs
+- Full-text search across sections, descriptions, and notes
+- Filter by sections
+- Export/Import data as JSON
+- Persistent storage in SQLite database
+- Clean, responsive interface
+
+## Setup and Run
+
+1. Create and activate a Python virtual environment:
 
 ```bash
-python3 -m http.server 8000
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-2. Open http://localhost:8000
+1. Install dependencies:
 
-Notes
-- This is a client-only app (no backend). Data is kept in your browser's localStorage.
-- Export/import JSON to move data between devices.
+```bash
+pip install -r requirements.txt
+```
 
-# Development Repository
+1. Run the Flask application:
 
-## Overview
+```bash
+python app.py
+```
 
-This repository is a monorepo for personal and enterprise device management, automation, and knowledge sharing, primarily focused on Workspace ONE (WS1) and related platforms. It contains:
+1. Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser
 
-- **Personal Projects** (HTML/JS/CSS, React)
-- **Workspace ONE Artifacts** (Profiles, Scripts, Sensors, Email Templates)
-- **Platform Automation** (PowerShell, Shell scripts)
-- **Reference Documentation** (Markdown knowledge base, platform guides)
+## Project Structure
 
----
+- `app.py` — Flask backend with SQLite database and REST API
+- `index.html` — Main application page
+- `static/`
+  - `styles.css` — Responsive styling
+  - `app.js` — Frontend logic and API integration
+  - `logo.svg` — Application logo
 
-## Directory Structure
+## API Endpoints
 
-- `0. Personal_Development/`
-   - `html/` – Web dashboards, investment tools, and knowledge base (static HTML/JS/CSS)
-   - `react/` – React-based projects (e.g., internet speed test, portfolio template)
-- `0.2. Platform_Automation/`
-   - `PowerShell/` – Device automation scripts for iOS
-   - `Shell_Scripting/` – Shell automation (currently a placeholder)
-- `0.3. Reference_Files/` – Markdown docs for platforms, workflows, and WS1 operations
-- `1. Workspace_One/`
-   - `Dev/`, `Product/`, `Test/` – Each with subfolders for `email`, `profiles`, `scripts`, `sensors` by platform (iOS, macOS, Android)
+- `GET /api/items` — List all documents (supports search with ?q= parameter)
+- `POST /api/items` — Create a new document entry
+- `PUT /api/items/<id>` — Update an existing document
+- `DELETE /api/items/<id>` — Remove a document
+- `POST /api/import` — Bulk import documents from JSON
 
----
+## Database
 
-## Key Workflows
+The application uses SQLite (`doctrack.db`) for storage. The database is automatically initialized when you first run the app. Document entries include:
 
-### 1. Web Dashboards & Tools
+- Section (for categorization)
+- Description
+- URLs (stored as JSON)
+- Notes
+- Creation timestamp
 
-- **Device Dashboard**:
-   - Path: `0. Personal_Development/html/device_dashboard_WIP/`
-   - Uses Bootstrap, Chart.js, and custom JS to visualize device data from Workspace ONE APIs.
-   - Configure API credentials in `script.js` before use.
+## Development
 
-- **Investment Summary**:
-   - Path: `0. Personal_Development/html/investment_summary_WIP/`
-   - Simple login and dashboard, static authentication in JS.
+## Development
 
-- **Knowledge Base**:
-   - Path: `0. Personal_Development/html/knowledge_base_WIP/`
-   - Markdown-driven, with code highlighting and navigation for WS1 operations.
+### Frontend Development
 
-### 2. React Apps
+- `static/app.js` - Application logic and API integration
+- `static/styles.css` - Responsive styling
+- `index.html` - Page structure and components
 
-- Each React project (e.g., `internet_speedtest`) uses Create React App conventions.
-- Use `npm install` and `npm start` in the respective project directory.
+### Backend Development
 
-### 3. Workspace ONE Artifacts
+- `app.py` - Flask routes and database models
+- Database schema changes require migrations (see Database section)
 
-- **Profiles**:
-   - Store XML/plist or JSON profile payloads for iOS/macOS in `profiles/`.
-   - Reference Omnissa KBs for deployment steps (see main `README.md`).
+## Data Import/Export
 
-- **Scripts**:
-   - Bash, Zsh, or PowerShell scripts for device automation.
-   - Place scripts in the appropriate platform subfolder.
+The app provides several ways to manage your data:
 
-- **Email Templates**:
-   - HTML templates for device enrollment, compliance, etc.
-
-- **Sensors**:
-   - Custom device sensors for WS1, organized by platform.
-
-### 4. Platform Automation
-
-- PowerShell and Shell scripts for device management tasks.
-- Scripts are organized by platform and function.
-
-### 5. Reference Files
-
-- Markdown files document assignment groups, compliance policies, workflows, and platform details.
-- Use as a quick reference for WS1 operations.
-
----
-
-## Project Conventions
-
-- **No central build system**: Each app or script is self-contained.
-- **Web apps**: Use CDN for dependencies (Bootstrap, Chart.js, Highlight.js).
-- **Sensitive data**: API keys and secrets in JS files are placeholders—replace before use.
-- **Documentation**: All major workflows and platform details are documented in Markdown under `0.3. Reference_Files/`.
-
----
-
-## Security
-
-See `SECURITY.md` for supported versions and vulnerability reporting.
-
----
-
-## Getting Started
-
-1. **Clone the repo** and navigate to the desired project.
-2. For React apps:
-
-    ```bash
-    cd 0. Personal_Development/react/internet_speedtest
-    npm install
-    npm start
-    ```
-
-3. For HTML tools:
-
-    Open the `.html` file directly in your browser.
-
-4. For scripts:
-
-    Review and run scripts in the appropriate shell or PowerShell environment.
-
----
+- Export/Import buttons in the UI for backup and transfer
+- REST API endpoint `/api/import` for bulk imports
+- Direct database access via SQLite (`doctrack.db`)
 
 ## License
 
-See [LICENSE](LICENSE).
+© 2025 Biswajit Ghosh. All rights reserved.
 

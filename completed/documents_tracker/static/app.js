@@ -14,6 +14,7 @@
   const itemsWrap = el('items');
   const exportBtn = el('export-btn');
   const importBtn = el('import-btn');
+  const migrateBtn = el('migrate-btn');
   const clearBtn = el('clear-btn');
   const fileImport = el('file-import');
   const search = el('search');
@@ -24,11 +25,29 @@
   let editId = null; // when editing an API-backed item
 
   // detect API availability (simple ping)
-  async function detectApi(){
+  // detect API availability (try relative path first, then common localhost origins)
+  async function fetchWithTimeout(url, timeout = 400){
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
     try{
-      const res = await fetch('/api/ping');
-      if(res.ok){ useApi = true; }
-    }catch(e){ useApi = false; }
+      const res = await fetch(url, {signal: controller.signal});
+      clearTimeout(id);
+      return res;
+    }catch(err){
+      clearTimeout(id);
+      throw err;
+    }
+  }
+
+  async function detectApi(){
+    useApi = false;
+    const candidates = ['/api/ping', 'http://127.0.0.1:5000/api/ping', 'http://localhost:5000/api/ping'];
+    for(const url of candidates){
+      try{
+        const res = await fetchWithTimeout(url, 400);
+        if(res && res.ok){ useApi = true; break; }
+      }catch(e){ /* try next */ }
+    }
   }
 
   async function load(searchQuery = ''){
@@ -42,6 +61,11 @@
     }else{
       try { items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
       catch(e){ items = []; }
+    }
+    // show migrate option if API available and there are local items
+    const local = (function(){ try{return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }catch(e){return [];} })();
+    if(migrateBtn){
+      migrateBtn.style.display = (useApi && local && local.length > 0) ? 'inline-block' : 'none';
     }
     render(searchQuery);
   }
@@ -182,6 +206,25 @@
     }
     render();
   });
+
+  // Migrate localStorage items to server (POST /api/import)
+  if(migrateBtn){
+    migrateBtn.addEventListener('click', async ()=>{
+      if(!confirm('Migrate local browser data to the server database? This will POST all locally stored items to the server.')) return;
+      const localItems = (function(){ try{return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }catch(e){return []; } })();
+      if(!localItems || !localItems.length){ alert('No local items to migrate.'); return; }
+      try{
+        const res = await fetch('/api/import', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(localItems)});
+        if(!res.ok) throw new Error('Import failed: ' + res.statusText);
+        const created = await res.json();
+        // clear localStorage (optional) and refresh list
+        localStorage.removeItem(STORAGE_KEY);
+        items = created.concat(items);
+        render();
+        alert('Migration complete — ' + created.length + ' items migrated. Local copy removed.');
+      }catch(err){ alert('Migration failed: ' + (err.message || err)); }
+    });
+  }
 
   search && search.addEventListener('input', (e) => {
     const searchQuery = e.target.value.trim().toLowerCase();
