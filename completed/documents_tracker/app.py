@@ -43,10 +43,11 @@ class Item(db.Model):
         }
 
 
-@app.before_first_request
 def init_db():
-    db.create_all()
+    with app.app_context():
+        db.create_all()
 
+init_db()
 
 @app.route('/')
 def index():
