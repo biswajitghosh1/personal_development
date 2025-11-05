@@ -1,14 +1,13 @@
 # Password Generator (Static Web)
 
-Simple, device-agnostic static password generator UI (HTML/CSS/JS). Open `index.html` in any modern browser or serve it via HTTP. This repository folder contains a Dockerfile and a docker-compose configuration so you can run the site in a container quickly.
+Simple, device-agnostic static password generator UI (HTML/CSS/JS). Open `index.html` in any modern browser or serve it via a local HTTP server to enable full browser features (clipboard, fetch, service workers).
 
 ## What is included
 
 - `index.html` — main UI
 - `styles.css` — styling and centered layout
 - `script.js` — generation logic and clipboard helper
-- `Dockerfile` — builds a small nginx-based image that serves the static files
-- `docker-compose.yml` — compose file to build and run the service (exposes port 8080 by default)
+- `script.js` — generation logic and clipboard helper
 
 ## Quick local usage (no Docker)
 
@@ -22,46 +21,29 @@ python -m http.server 8000
 # then open http://localhost:8000
 ```
 
-## Docker (recommended for hosting)
+## Quick local usage
 
-This folder includes a minimal `Dockerfile` that copies the static files into an `nginx:alpine` image. There's also a `docker-compose.yml` that builds the image and exposes port `8080` on the host.
+Open `index.html` directly in a browser (works offline). For best compatibility with features like the clipboard API and fetch requests, serve the folder over HTTP. A simple way to do this is with Python's built-in HTTP server.
 
-Build the image and run with Docker directly:
+Using Python (macOS / Linux / zsh):
 
-```powershell
-cd "C:\...\password_generator_web"
-docker build -t password-generator:latest .
-docker run -d --name password_generator -p 8080:80 password-generator:latest
-# open http://localhost:8080
+```bash
+cd "2. App Development/b. password_generator_web"
+python3 -m http.server 8000
+# then open http://localhost:8000
 ```
 
-Or use Docker Compose (recommended):
-
-```powershell
-cd "C:\...\password_generator_web"
-docker compose up --build -d
-# open http://localhost:8080
-```
-
-To stop and remove the containers:
-
-```powershell
-docker compose down
-```
-
-### Dev mode (live edits)
-
-If you want to iterate quickly without rebuilding the image, the compose file includes an optional `volumes` mapping (commented). You can enable it to mount the local directory into the container. This lets you edit `index.html`/`script.js` and refresh the browser to see changes immediately.
+If you prefer, use any static file server or host the files on a static host (GitHub Pages, Netlify, Vercel, etc.).
 
 ## Production notes
 
-- The image is intentionally minimal and uses nginx to serve static content. For production, consider adding a small reverse proxy or TLS termination (e.g., Caddy, Traefik) to manage HTTPS (or run behind a load balancer that provides TLS).
-- If you want to publish the site to the public internet, ensure you secure the hosting environment (firewall, TLS), and consider using a static site host (GitHub Pages, Netlify) for simplicity.
+- If you publish the site to the public internet, ensure TLS is configured (HTTPS) and the hosting environment is secured.
+- For a simple public deployment prefer a static site host (GitHub Pages, Netlify, Vercel) or serve behind a reverse proxy that handles TLS.
 
 ## Troubleshooting
 
-- If port `8080` is in use, update `docker-compose.yml` or `docker run` port mapping.
-- If clipboard copy doesn't work in some browsers when opened as a `file://` URL, use the HTTP server or Docker approach described above.
+- If fetch requests or clipboard APIs appear restricted when opening `index.html` via `file://`, serve the folder over HTTP (see Quick local usage).
+- If a port is in use, pick a different port when running the local server (for example `python3 -m http.server 9000`).
 
 ## License & copyright
 
