@@ -1,10 +1,17 @@
 Password Vault (WIP)
 
-This is a minimal local-only demo of a password vault web UI. It's intentionally simple and NOT secure for production use. Use only for local testing or prototyping.
+This is a minimal, local Flask-based password vault demo. It's intentionally simple and NOT secure for production use — it's meant for local testing and prototyping only.
 
-Features
-- Static login (default admin/password)
-- Add, list, delete entries stored in-memory for the current process
+Key details
+- Simple static login (credentials configurable via environment variables)
+- Entries are persisted to a local SQLite database file (`vault.db`) next to `app.py` (not in-memory)
+- Client-side live search: the search box filters entries instantly by site, username, and description; a matching "Clear" button appears only when there's input
+- Add / Edit / Delete entries through the web UI
+
+Recent changes
+- Removed the legacy `type` field from the entry form and database schema.
+- Implemented client-side live search: typing in the search box filters results instantly (site, username, description).
+- Added a client-side Clear button that appears only when there is input and matches the Search button styling.
 
 Run locally
 
