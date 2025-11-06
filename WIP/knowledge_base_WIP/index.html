@@ -23,56 +23,39 @@
 <body>
     <!--header section starts-->
     <header>
-        <div class="logo">
-            <img src="images/Shell Pecten RGB colour.jpg" alt="logo">
-            <div class="logo-text">Mac and Mobile Knowledgebase</div>
+        <div class="header-flex">
+            <div class="logo">
+                <img src="images/Shell Pecten RGB colour.jpg" alt="logo">
+                <div class="logo-text">Mac and Mobile Knowledgebase</div>
+            </div>
+            <nav aria-label="Main navigation" class="sleek-nav">
+                <button class="menu-toggle" aria-expanded="false" aria-controls="nav-menu">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="hamburger"></span>
+                </button>
+                <ul id="nav-menu" class="nav-menu">
+                    <li class="nav-item"><a href="#mac" aria-label="Mac section">Mac</a></li>
+                    <li class="nav-item"><a href="#iphone" aria-label="iPhone section">iPhone</a></li>
+                    <li class="nav-item"><a href="#ipad" aria-label="iPad section">iPad</a></li>
+                    <li class="nav-item"><a href="#android" aria-label="Android section">Android</a></li>
+                    <li class="nav-item"><a href="#windows" aria-label="Windows section">Windows</a></li>
+                </ul>
+            </nav>
         </div>
-        <div class="menu-toggle" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <nav id="navbar">
-            <a href="index.html" class="active">Home</a>
-            <a href="KB_WS1_AG.html">Assignment Groups</a>
-            <a href="KB_WS1_CP.html">Compliance Policies</a>
-            <a href="KB_WS1_ET.html">Email Templates</a>
-            <a href="KB_WS1_DS.html">Device Scripts</a>
-            <a href="KB_WS1_Dsen.html">Device Sensors</a>
-            <a href="KB_Ref_Gen_Info.html">General Information</a>
-        </nav>
     </header>
     <!--Header Section Ends-->
 
+    <script src="scripts/navigation.js"></script>
     <script src="scripts/script.js"></script>
     <script src="scripts/script_code_block.js"></script>
 
     <main>
-        <h1 style="text-align: center;">Welcome to Mac and Mobile Knowledgebase</h1>
-
-
-        <!--Introduction Section Starts-->
-        <h2>Introduction</h2>
-        <p>
-            Welcome to Mac and Mobile Knowledgebase. This document is designed with an intention to support with the day-to-day operations of this landscape. This document has been divided into sections which are easy to understand and has been aligned as per the usage and as below:
-            <table>
-                <tr>
-                    <td><a href="KB_WS1_AG.html">Assignment Groups</a></td>
-                </tr>
-                <tr>
-                    <td><a href="KB_WS1_CP.html">Compliance Policies</a></td>
-                </tr>
-                <tr>
-                    <td><a href="KB_WS1_ET.html">Email Templates</a></td>
-                </tr>
-                <tr>
-                    <td>Device Scripts</td>
-                </tr>
-                <tr>
-                    <td>General Information</td>
-                </tr>
-            </table>
-        </p>
+        <section class="hero" aria-label="Main sections">
+            <h1>General Information</h1>
+            <h1>Profiles</h1>
+            <h1>Scripts</h1>
+            <h1>Tools</h1>
+        </section>
         <!--Introduction Section Ends-->
 
 
@@ -117,13 +100,14 @@
 
   <!--Footer Section Starts-->  
   <footer>
-    <p>&copy; 2025 Biswajit Ghosh. All rights reserved.</p>
-    <p>
-      <a href="index.html">Home</a> |
-      <a href="#">About</a> |
-      <a href="https://github.com/biswajitghosh2/development/blob/main/LICENSE">License</a> |
-      <a href="https://github.com/biswajitghosh2/development/blob/main/README.md">GitHub README</a>
-    </p>
+        <p>&copy; 2025 Biswajit Ghosh. All rights reserved.<br>
+        This website and its content are copyright of Biswajit Ghosh - © 2025. Unauthorized use and/or duplication of this material without express and written permission from this site’s author is strictly prohibited.</p>
+        <p>
+            <a href="index.html">Home</a> |
+            <a href="#">About</a> |
+            <a href="https://github.com/biswajitghosh2/development/blob/main/LICENSE">License</a> |
+            <a href="https://github.com/biswajitghosh2/development/blob/main/README.md">GitHub README</a>
+        </p>
   </footer>
   <!--Footer Section Ends-->
 
