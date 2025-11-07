@@ -1,45 +1,40 @@
 <!DOCTYPE html>
-
-<!--Header Section Starts-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mac and Mobile KnowledgeBase | Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Code highlight styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/powershell.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/styles/line-numbers.min.css"/>
-    <script src="scripts/script_code_block.js"></script>
 </head>
-<!--Header Section Ends-->
 
-<!--Body Section Starts-->
 <body>
-    <!--header section starts-->
     <header>
         <div class="header-flex">
-            <div class="logo">
-                <img src="images/Shell Pecten RGB colour.jpg" alt="logo">
-                <div class="logo-text">Mac and Mobile Knowledgebase</div>
-            </div>
-            <nav aria-label="Main navigation" class="sleek-nav">
+            <a href="/" class="logo">
+                <img src="images/Shell Pecten RGB colour.jpg" alt="Shell logo">
+                <span class="logo-text">Mac and Mobile Knowledgebase</span>
+            </a>
+            
+            <nav aria-label="Main navigation">
                 <button class="menu-toggle" aria-expanded="false" aria-controls="nav-menu">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="hamburger"></span>
                 </button>
                 <ul id="nav-menu" class="nav-menu">
-                    <li class="nav-item"><a href="#mac" aria-label="Mac section">Mac</a></li>
-                    <li class="nav-item"><a href="#iphone" aria-label="iPhone section">iPhone</a></li>
-                    <li class="nav-item"><a href="#ipad" aria-label="iPad section">iPad</a></li>
-                    <li class="nav-item"><a href="#android" aria-label="Android section">Android</a></li>
-                    <li class="nav-item"><a href="#windows" aria-label="Windows section">Windows</a></li>
+                    <li class="nav-item"><a href="#mac">Mac</a></li>
+                    <li class="nav-item"><a href="#iphone">iPhone</a></li>
+                    <li class="nav-item"><a href="#ipad">iPad</a></li>
+                    <li class="nav-item"><a href="#android">Android</a></li>
+                    <li class="nav-item"><a href="#windows">Windows</a></li>
                 </ul>
+                <button class="menu-toggle" aria-expanded="false" aria-controls="nav-menu">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="hamburger"></span>
+                </button>
             </nav>
         </div>
     </header>
@@ -110,6 +105,8 @@
         </p>
   </footer>
   <!--Footer Section Ends-->
+
+  <script src="scripts/navigation.js"></script>
 
 </body>
 <!-- Body Section Ends-->

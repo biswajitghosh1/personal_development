@@ -13,19 +13,16 @@
     --accent-yellow: #ffeb3b;
     --text-dark: #212121;
     --text-light: #ffffff;
-    --spacing-unit: clamp(1rem, 2vw, 2rem);
-    --header-height: 4rem;
-    --nav-bg: #333;
+    --nav-bg: var(--primary-red);
     --nav-text: var(--text-light);
     --nav-hover: var(--accent-yellow);
-    --content-width: min(100% - 2rem, 1200px);
-    --section-spacing: calc(var(--spacing-unit) * 2);
 }
 
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Header */
